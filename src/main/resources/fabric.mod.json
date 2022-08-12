@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "voidworld",
+  "version": "${version}",
+  "name": "Voidworld",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/voidworld/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+    ],
+    "main": [
+      "bluesillybeard.voidworld.VoidWorld"
+    ]
+  },
+  "mixins": [
+    "voidworld.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
