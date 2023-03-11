@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "voidworld",
+  "id": "generativedecay",
   "version": "${version}",
-  "name": "Voidworld",
+  "name": "GenerativeDecay",
   "description": "",
   "authors": [],
   "contact": {},
@@ -13,11 +13,11 @@
     "client": [
     ],
     "main": [
-      "bluesillybeard.voidworld.VoidWorld"
+      "bluesillybeard.generativedecay.GenerativeDecay"
     ]
   },
   "mixins": [
-    "voidworld.mixins.json"
+    "generativedecay.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.9",

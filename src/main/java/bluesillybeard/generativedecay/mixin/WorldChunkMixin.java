@@ -1,7 +1,7 @@
-package bluesillybeard.voidworld.mixin;
+package bluesillybeard.generativedecay.mixin;
 
-import bluesillybeard.voidworld.VoidWorld;
-import bluesillybeard.voidworld.VoidWorldType;
+import bluesillybeard.generativedecay.GenerativeDecay;
+import bluesillybeard.generativedecay.DecayType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -36,17 +36,17 @@ public abstract class WorldChunkMixin {
         //This constructor is only called when converting a ProtoChunk (a chunk in the process of being generated)
         // into a WorldChunk (a chunk that is a part of the world), so loading chunks don't get re-voided.
 
-        makeVoid(protoChunk, world.getGameRules().get(VoidWorld.VOID_WORLD_TYPE).get()); //What a chain of functions lol
+        makeVoid(protoChunk, world.getGameRules().get(GenerativeDecay.DECAY_TYPE).get()); //What a chain of functions lol
     }
 
     /**
-     * Removes the blocks within a ProtoChunk leaving only blocks where the X Y and Z coordinates are divisible by 4.
-     * Some blocks are left even when they aren't a multiple of 4, see the static EXCEPTIONS variable above.
+     * Applies a decay modification to a chunk,
      * @param chunk the chunk to remove the blocks of.
      */
-    private void makeVoid(Chunk chunk, VoidWorldType type){
+    private void makeVoid(Chunk chunk, DecayType type){
+        //The random is based on the chunk's position.
         Random random = new Random(chunk.getPos().hashCode());
-        if(type == VoidWorldType.disabled)return; //if it's disabled we can just move on.
+        if(type == DecayType.disabled)return; //if it's disabled we can just move on.
         BlockPos start = chunk.getPos().getStartPos();
         int bottomY = chunk.getBottomY();
         int topY = chunk.getHighestNonEmptySectionYOffset()+16; //bad things happen without the +16.
@@ -68,7 +68,7 @@ public abstract class WorldChunkMixin {
         }
     }
 
-    private static boolean shouldRemove(int x, int y, int z, VoidWorldType type, Random rand){
+    private static boolean shouldRemove(int x, int y, int z, DecayType type, Random rand){
         return switch(type){
             case disabled -> false; //no blocks removed
             case distance1 -> !(((x&1) == 0) && ((y&1)==0) && ((z&1)==0)); //every other block
@@ -84,6 +84,11 @@ public abstract class WorldChunkMixin {
         };
     }
 
+    /**
+     * Determines if a given block is one of the exceptions
+     * @param state The block you want to know if it's an exception or not
+     * @return a boolean, false if the block is an exception, true if it isn't an exception.
+     */
     private static boolean isNotException(BlockState state){
         for(Block block : EXCEPTIONS){
             if(state.isOf(block))return false;

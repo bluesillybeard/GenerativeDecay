@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "bluesillybeard.voidworld.mixin",
+  "package": "bluesillybeard.generativedecay.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "WorldChunkMixin"
