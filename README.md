@@ -1,4 +1,6 @@
-# VoidWorldMod
+# Generative Decay
+(renamed from Almost Void World)
+
 Inspired by RaysGrid, this is a mod that adds several different ways to modify terrain
 
 Source of inspiration:https://www.youtube.com/watch?v=fdYABpmVwKg
