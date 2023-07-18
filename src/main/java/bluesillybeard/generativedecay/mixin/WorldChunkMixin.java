@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.*;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -20,6 +21,7 @@ import java.util.Random;
 
 @Mixin(WorldChunk.class)
 public abstract class WorldChunkMixin {
+    @Unique
     private static final Block[] EXCEPTIONS = {
             Blocks.END_PORTAL_FRAME, //end portal so that people can still beat the game
             Blocks.SPAWNER //This just makes it easier, since spawners were so rare to begin with.
@@ -43,6 +45,7 @@ public abstract class WorldChunkMixin {
      * Applies a decay modification to a chunk,
      * @param chunk the chunk to remove the blocks of.
      */
+    @Unique
     private void makeVoid(Chunk chunk, DecayType type){
         //The random is based on the chunk's position.
         Random random = new Random(chunk.getPos().hashCode());
@@ -68,6 +71,7 @@ public abstract class WorldChunkMixin {
         }
     }
 
+    @Unique
     private static boolean shouldRemove(int x, int y, int z, DecayType type, Random rand){
         return switch(type){
             case disabled -> false; //no blocks removed
@@ -89,6 +93,7 @@ public abstract class WorldChunkMixin {
      * @param state The block you want to know if it's an exception or not
      * @return a boolean, false if the block is an exception, true if it isn't an exception.
      */
+    @Unique
     private static boolean isNotException(BlockState state){
         for(Block block : EXCEPTIONS){
             if(state.isOf(block))return false;
