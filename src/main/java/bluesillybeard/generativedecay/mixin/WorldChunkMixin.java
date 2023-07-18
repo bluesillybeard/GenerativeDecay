@@ -52,7 +52,7 @@ public abstract class WorldChunkMixin {
         if(type == DecayType.disabled)return; //if it's disabled we can just move on.
         BlockPos start = chunk.getPos().getStartPos();
         int bottomY = chunk.getBottomY();
-        int topY = chunk.getHighestNonEmptySectionYOffset()+16; //bad things happen without the +16.
+        int topY = chunk.getTopY(); //bad things happen without the +16.
         BlockState air = Blocks.AIR.getDefaultState();
         for(int x=0; x<16; ++x){
             for(int y=bottomY; y<topY; ++y){
