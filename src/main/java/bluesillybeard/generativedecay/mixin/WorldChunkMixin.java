@@ -47,12 +47,11 @@ public abstract class WorldChunkMixin {
      */
     @Unique
     private void makeVoid(Chunk chunk, DecayType type){
-        //The random is based on the chunk's position.
         Random random = new Random(chunk.getPos().hashCode());
-        if(type == DecayType.disabled)return; //if it's disabled we can just move on.
+        if(type == DecayType.disabled)return;
         BlockPos start = chunk.getPos().getStartPos();
         int bottomY = chunk.getBottomY();
-        int topY = chunk.getTopY(); //bad things happen without the +16.
+        int topY = chunk.getTopY();
         BlockState air = Blocks.AIR.getDefaultState();
         for(int x=0; x<16; ++x){
             for(int y=bottomY; y<topY; ++y){
@@ -74,15 +73,15 @@ public abstract class WorldChunkMixin {
     @Unique
     private static boolean shouldRemove(int x, int y, int z, DecayType type, Random rand){
         return switch(type){
-            case disabled -> false; //no blocks removed
-            case distance1 -> !(((x&1) == 0) && ((y&1)==0) && ((z&1)==0)); //every other block
-            case distance2 -> !(((x%3) == 0) && ((y%3)==0) && ((z%3)==0)); //every 3 blocks
-            case distance3 -> !(((x&3) == 0) && ((y&3)==0) && ((z&3)==0)); //every 4 blocks
-            case random25 -> rand.nextDouble() < 0.25; //25 percent chance
-            case random50 -> rand.nextDouble() < 0.5; //50 percent chance
-            case random75 -> rand.nextDouble() < 0.75; //75 percent chance
-            case random90 -> rand.nextDouble() < 0.9; //90 percent chance
-            case random99 -> rand.nextDouble() < 0.99; //99 percent chance
+            case disabled -> false;
+            case distance1 -> !(((x&1) == 0) && ((y&1)==0) && ((z&1)==0));
+            case distance2 -> !(((x%3) == 0) && ((y%3)==0) && ((z%3)==0));
+            case distance3 -> !(((x&3) == 0) && ((y&3)==0) && ((z&3)==0));
+            case random25 -> rand.nextDouble() < 0.25;
+            case random50 -> rand.nextDouble() < 0.5;
+            case random75 -> rand.nextDouble() < 0.75;
+            case random90 -> rand.nextDouble() < 0.9;
+            case random99 -> rand.nextDouble() < 0.99;
             //case completeVoid -> true; //always remove, except the block at 0,60, 0 so there is a place to spawn
             //default -> false;
         };
@@ -110,6 +109,8 @@ public abstract class WorldChunkMixin {
         // Though often it doesn't even work in the vanilla game sometimes (lol)
 
         //this just makes it to where water is left floating, to keep the "gridworld" look even with water in the mix.
+
+        // Sometimes water still decides to flow for some reason, but it's rare enough that I don't consider it problematic.
     }
 
 }
